@@ -1,0 +1,126 @@
+<!-- 
+HardlySocial stores one message per user.  Users can come back to update their message anytime.
+Built for Nebulas by HardlyDifficult.  youtube.com/HardlyDifficult
+License: MIT (https://github.com/hardlydifficult/HardlySocialNebulas/blob/master/LICENSE) 
+
+See also HardlySocialContract.js
+-->
+
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>Middleman - DApp for Nebulas</title>
+	<link rel=stylesheet href=css/main.css>
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
+</head>
+<body>
+	<div class="mainContainer">
+		<div class="network">
+			<div>You are on Mainnet</div>
+			<div>Switch to <a href="testnet.html">Testnet</a></div>
+		</div>
+		<header class="main">
+			<div>Middleman DApp</div>
+		</header>
+
+		<section class="right">
+			<div class="generalInfo">
+				<div class="dapp">This is a <a href="https://nebulas.io/">Nebulas.io</a> decentralized application (DApp).</div>
+				<div class="myApp">This DApp operates as a Middleman between a supplier and a consumer. It secure the funds between them during the transfert of goods.</div>
+			</div>
+
+			<div class="toggle-menu">
+				<div class="selectText">Please select who you are:</div>
+				<div class="switch switch-blue">
+					<input type="radio" class="switch-input" name="view3" value="buyer" id="buyer" checked>
+					<label for="buyer" class="switch-label switch-label-off">Buyer</label>
+					<input type="radio" class="switch-input" name="view3" value="seller" id="seller">
+					<label for="seller" class="switch-label switch-label-on">Seller</label>
+					<span class="switch-selection"></span>
+				</div>
+			</div>
+
+			<div class="step">
+				<div class="title">Step 1</div>
+				<div class="desc consumer">You can generate a transaction from your wallet to the wallet selected.</div>
+				<div class="desc supplier" style="display: none;">You have to wait for the consumer/buyer to generate a transaction for you.</div>
+			</div>
+			<div class="step">
+				<div class="title">Step 2</div>
+				<div class="desc consumer">You have to wait for the supplier/seller to send you the goods.</div>
+				<div class="desc supplier" style="display: none;">You have to send the goods to the consumer/buyer and confirm that send here.</div>
+			</div>
+			<div class="step">
+				<div class="title">Step 3</div>
+				<div class="desc consumer">When you receive the goods, confirm the reception here.</div>
+				<div class="desc supplier" style="display: none;">You have to wait for the consumer/buyer to receive the goods and to confirm it. You'll automatically receive payment when that's done.</div>
+			</div>
+
+			<div class="activeTransaction">Active transaction: <img id="refresh" onclick="javascript:refreshData()" src="img/refresh.png"></div>
+			<div class="consumer">
+				<div class="transactionDetail step-1" style="display: none;">
+					<div class="title">You are on <span>step 1</span></div>
+					<div class="form">
+						<div>
+							<label for="address">Wallet address of the supplier </label>
+							<input type="text" name="address" id="createTransaction-address">
+						</div>
+						<div>
+							<label for="amount">Amount to send (in NAS)</label>
+							<input type="text" name="amount" id="createTransaction-amount">
+						</div>
+						<button class="withWallet" id=createTransaction onclick="javascript:onCreateTransaction()">Create Transaction</button>
+					</div>
+				</div>
+				<div class="transactionDetail step-2" style="display: none;">
+					<div class="title">You are on <span>step 2</span></div>
+					<div>You have to wait for the seller to send you the goods and confim it on the contract!</div>
+				</div>
+				<div class="transactionDetail step-3" style="display: none;">
+					<div class="title">You are on <span>step 3</span></div>
+					<div class="form">
+						<div>After you have received the goods, please confirm it by clicking below!</div>
+						<button class="withWallet" id=confirmReceiving onclick="javascript:onConfirmReceiving()">Confirm the reception</button>
+					</div>
+				</div>
+				<div class="transactionDetail step-wrong" style="display: none;">
+					<div class="title">You are already participating in another transaction as a <span class="youAre">???</span>.</div>
+					<div>Please finish it first before trying to do another one.</div>
+				</div>
+			</div>
+			<div class="supplier">
+				<div class="transactionDetail step-1" style="display: none;">
+					<div class="title">You are on <span>step 1</span></div>
+					<div>You have to wait for the buyer to create the transaction!</div>
+				</div>
+				<div class="transactionDetail step-2" style="display: none;">
+					<div class="title">You are on <span>step 2</span></div>
+					<div>The buyer has successfully send: <span id="transactionInformation">Loading.. NAS</span></div>
+					<div class="form">
+						<div>After you have sent the goods, please confirm it by clicking below!</div>
+						<button class="withWallet" id=confirmSending onclick="javascript:onConfirmSending()">Confirm Sending</button>
+					</div>
+				</div>
+				<div class="transactionDetail step-3" style="display: none;">
+					<div class="title">You are on <span>step 3</span></div>
+					<div>You have to wait for the buyer to receive the goods you sent and for him to confim it on the contract!</div>
+				</div>
+				<div class="transactionDetail step-wrong" style="display: none;">
+					<div class="title">You are already participating in another transaction as a <span class="youAre">???</span>.</div>
+					<div>Please finish it first before trying to do another one.</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+
+
+	<!-- All of these scripts are dependancies from the Nebulas Web Wallet -->
+	<script src=lib/jquery-3.3.1.min.js></script>
+	<script src=js/nebPay.js></script> 
+	
+	<!-- Front end logic for our Dapp -->
+	<script src="js/main.js"></script>
+</body>
+</html>
